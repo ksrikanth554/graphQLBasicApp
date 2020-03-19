@@ -4,11 +4,14 @@ import './graphql_config.dart';
 import './transactio.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
+
+GraphQlConfiguration graphQlConfiguration=GraphQlConfiguration();
+
 void main(){
 
       runApp(
         GraphQLProvider(
-          client: GraphQlConfiguration.client,
+          client: graphQlConfiguration.client,
           //client: GraphQlConfiguration().client,
         
           child: CacheProvider(child:MyApp()),

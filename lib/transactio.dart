@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mygraphql/alertdialog_window.dart';
 import './Queries/querymutation.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import './graphql_config.dart';
@@ -22,9 +23,9 @@ class _TransactionState extends State<Transaction> {
       QueryOptions(document:queryMutation.getAll() ,)
     );
 
-    if(true){
+    if(!result.hasException){
 
-      for(int i=0;i<result.data["persons"];i++){
+      for(int i=0;i<result.data["persons"].length;i++){
         listPerson.add(
           Person(
             result.data["persons"][i]["id"],
@@ -46,6 +47,16 @@ class _TransactionState extends State<Transaction> {
     super.initState();
     fillList();
   }
+  _addPerson(BuildContext context){
+    showDialog(
+      context: context,
+      builder: (ctx){
+        return AlertDialogWindow(isAdd: true,);
+        
+      }
+      );
+
+  }
 
 
 
@@ -58,9 +69,34 @@ class _TransactionState extends State<Transaction> {
           IconButton(
             icon: Icon(Icons.add_circle_outline),
            
-            onPressed: (){})
+            onPressed:(){
+              setState(() {
+                _addPerson(context);
+              });
+            } )
         ],
 
+      ),
+      body: Stack(
+            children: <Widget>[
+              Container(
+                width: MediaQuery.of(context).size.width,
+                
+                child: Text('Transaction',textAlign: TextAlign.center,style: TextStyle(fontSize: 30.0),),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03),
+                width: MediaQuery.of(context).size.width,
+                child: ListView.builder(
+                  itemCount: listPerson.length,
+                  itemBuilder:(ctx,index){
+                    return ListTile(
+                      title: Text('${listPerson[index].getName()}'),
+                    );
+                  }
+                  ),
+              )
+            ],
       ),
       
     );

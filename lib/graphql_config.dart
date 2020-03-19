@@ -8,7 +8,7 @@ class GraphQlConfiguration{
     );
 
 
-static ValueNotifier<GraphQLClient> client=ValueNotifier(
+ ValueNotifier<GraphQLClient> client=ValueNotifier(
   GraphQLClient(link:httpLink ,
                cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject),
                

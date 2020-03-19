@@ -1,5 +1,5 @@
 class Person{
-  final int id;
+  final String id;
   final String name;
   final String lastName;
   final int age;

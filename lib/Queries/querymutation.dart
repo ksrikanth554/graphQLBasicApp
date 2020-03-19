@@ -1,6 +1,6 @@
 class QueryMutation{
 
-  String addPerson(int id,String name,String lastName,int age){
+  String addPerson(String id,String name,String lastName,int age){
     return"""
         mutation{
           addPerson(id:"$id",name:"$name",lastName:"$lastName",age:"$age"){
@@ -31,7 +31,7 @@ class QueryMutation{
     """;
   }
 
-  String deletePerson(int id){
+  String deletePerson(String id){
 
     return """
         mutation{
@@ -43,7 +43,7 @@ class QueryMutation{
 
   }
 
-  String editPerson(int id,String name,String lastName,int age){
+  String editPerson(String id,String name,String lastName,int age){
     return """
       mutation{
         editPerson(id:"$id",name:"$name",lastName:"$lastName",age:"$age"){
