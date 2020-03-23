@@ -16,6 +16,7 @@ class _TransactionState extends State<Transaction> {
   GraphQlConfiguration graphQlConfiguration=GraphQlConfiguration();
 
   void fillList() async{
+    
     QueryMutation queryMutation=QueryMutation();
     GraphQLClient _client=graphQlConfiguration.clientQuery();
 
@@ -35,17 +36,21 @@ class _TransactionState extends State<Transaction> {
 
 
           )
-
+          
         );
       }
     }
+    setState(() {
+      
+    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     fillList();
+    super.initState();
+     
   }
   _addPerson(BuildContext context){
     showDialog(
@@ -54,7 +59,10 @@ class _TransactionState extends State<Transaction> {
         return AlertDialogWindow(isAdd: true,);
         
       }
-      );
+      ).whenComplete((){
+        listPerson.clear();
+        fillList();
+      });
 
   }
 

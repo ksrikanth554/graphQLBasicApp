@@ -2,14 +2,16 @@ class QueryMutation{
 
   String addPerson(String id,String name,String lastName,int age){
     return"""
-        mutation{
-          addPerson(id:"$id",name:"$name",lastName:"$lastName",age:"$age"){
-            id
-            name
-            lastName
-            age
-          }
-        }
+       mutation {
+  insert_persons(objects: [{id: "$id", name: "$name", lastname: "$lastName", age:"$age" }]) {
+    returning {
+      id
+      name
+      lastname
+      age
+    }
+  }
+}
 
 
     """;
@@ -18,15 +20,14 @@ class QueryMutation{
   String getAll(){
 
     return """
-      {
-        persons{
-          id
-          name
-          lastName
-          age
+     query{
+          persons{
+            id
+            name
+            lastname
+            age
+          }
         }
-
-      }
 
     """;
   }
@@ -48,7 +49,7 @@ class QueryMutation{
       mutation{
         editPerson(id:"$id",name:"$name",lastName:"$lastName",age:"$age"){
           name
-          lastName
+          lastname
         }
       }
 

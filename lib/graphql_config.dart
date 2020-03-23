@@ -4,8 +4,9 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 class GraphQlConfiguration{
   static final  HttpLink httpLink=HttpLink(
-    uri: "https://examplegraphql.herokuapp.com/graphql",
+    uri: "https://mygraphql-hasura.herokuapp.com/v1/graphql",
     );
+    
 
 
  ValueNotifier<GraphQLClient> client=ValueNotifier(

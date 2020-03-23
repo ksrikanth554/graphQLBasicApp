@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:mygraphql/Queries/querymutation.dart';
 import 'package:mygraphql/graphql_config.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import './model/person.dart';
 
 class AlertDialogWindow extends StatefulWidget {
@@ -113,7 +114,7 @@ class _AlertDialogWindowState extends State<AlertDialogWindow> {
       ),
 
       actions: <Widget>[
-        FlatButton(onPressed: ()=>Navigator.of(context), child: Text('Close')),
+        FlatButton(onPressed: ()=>Navigator.of(context).pop(), child: Text('Close')),
         !this.isAdd?FlatButton(
           child: Text('Delete'),
           onPressed: (){
@@ -125,12 +126,15 @@ class _AlertDialogWindowState extends State<AlertDialogWindow> {
         FlatButton( 
           child:Text(this.isAdd?'Add':'Edit'),
           onPressed: ()async{
-
+             ProgressDialog progressDialog=ProgressDialog(context);
+            
+            
             if(txtId.text.isNotEmpty&&
                 txtName.text.isNotEmpty&&
                 txtlastName.text.isNotEmpty&&
                 txtage.text.isNotEmpty){
-
+                     progressDialog.update(message: 'Saving');
+                      progressDialog.show();
                     if(this.isAdd){
                       GraphQLClient _client=graphQlConfiguration.clientQuery();
 
@@ -147,7 +151,7 @@ class _AlertDialogWindowState extends State<AlertDialogWindow> {
                       );
 
                       if(!result.hasException){
-                        
+                        progressDialog.hide();
                         setState(() {
                         txtId.clear();
                         txtName.clear();
@@ -158,6 +162,21 @@ class _AlertDialogWindowState extends State<AlertDialogWindow> {
                         });
                        
                       }
+                      if(result.hasException){
+                        
+                        progressDialog.hide();
+                        showDialog(context: context,
+                        builder: (ctx){
+                          return AlertDialog(
+                            title: Text('Error'),
+                            content: Text('Saving Error'),
+                            actions: <Widget>[
+                              FlatButton(onPressed: ()=>Navigator.pop(context), child: Text('ok'))
+                            ],
+                          );
+                        });
+                      }
+                      
 
 
                     }
